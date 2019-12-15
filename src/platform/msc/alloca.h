@@ -17,8 +17,6 @@
 
 #pragma once
 
-#if !defined(__cplusplus)
-#include <stddef.h>
+#ifndef __cplusplus
+#define alloca(size) _alloca(size)
 #endif
-
-void generate_random_bytes(size_t n, void *result);

@@ -1,22 +1,28 @@
 {
-    "name": "cryptonote-util",
-    "version": "0.0.1",
+    "name": "adoncoin-cryptonote-util",
+    "version": "0.0.2",
     "main": "cryptonote",
     "gypfile": true,
     "author": {
         "name": "LucasJones",
         "email": "lucasjonesdev@hotmail.co.uk"
     },
+    "contributors": [
+        "nanze <nanze@adon.network>"
+    ],
+    "license": "GPL-3.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/LucasJones/node-cryptonote-util.git"
+        "url": "https://github.com/adon-net/node-cryptonote-util.git"
     },
     "scripts": {
-      "test": "node-gyp clean && node-gyp configure && node-gyp build"
+        "test": "node-gyp clean && node-gyp configure && node-gyp build && node test.js"
     },
     "dependencies": {
         "bindings": "*",
-        "nan": "^2.6.2"
+        "nan": "^2.14.0",
+        "node-gyp": "^6.0.1",
+        "safe-buffer": "^5.1.2"
     },
     "keywords": [
         "cryptonight",

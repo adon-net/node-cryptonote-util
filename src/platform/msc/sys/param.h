@@ -17,8 +17,7 @@
 
 #pragma once
 
-#if !defined(__cplusplus)
-#include <stddef.h>
-#endif
-
-void generate_random_bytes(size_t n, void *result);
+#define LITTLE_ENDIAN 1234
+#define BIG_ENDIAN 4321
+#define PDP_ENDIAN 3412
+#define BYTE_ORDER LITTLE_ENDIAN

@@ -1,8 +1,13 @@
-// Copyright (c) 2012-2013 The Cryptonote developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2012-2017, The CryptoNote developers
+// Copyright (c) 2018, The TurtleCoin Developers
+// 
+// Please see the included LICENSE file for more information.
 
 #include <alloca.h>
+#if defined(_MSC_VER)
+#include <malloc.h>
+#endif
+
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -210,18 +215,19 @@ namespace crypto {
     ge_tobytes(&image, &point2);
   }
 
-PUSH_WARNINGS
-DISABLE_VS_WARNINGS(4200)
+#ifdef _MSC_VER
+#pragma warning(disable: 4200)
+#endif
+
   struct rs_comm {
     hash h;
     struct {
       ec_point a, b;
     } ab[];
   };
-POP_WARNINGS
 
   static inline size_t rs_comm_size(size_t pubs_count) {
-    return sizeof(rs_comm) + pubs_count * sizeof(rs_comm().ab[0]);
+    return sizeof(rs_comm) + pubs_count * sizeof(((rs_comm*)0)->ab[0]);
   }
 
   void crypto_ops::generate_ring_signature(const hash &prefix_hash, const key_image &image,

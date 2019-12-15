@@ -1,4 +1,8 @@
+#if !defined(_WIN32)
 #include <cmath>
+#endif
+
+#include <chrono>
 #include <node.h>
 #include <node_buffer.h>
 #include <v8.h>
@@ -164,7 +168,7 @@ NAN_METHOD(construct_block_blob) {
         return THROW_ERROR_EXCEPTION("Failed to parse block");
 
     b.nonce = nonce;
-    if (b.major_version == BLOCK_MAJOR_VERSION_2) {
+    if (b.major_version >= BLOCK_MAJOR_VERSION_2) {
         block parent_block;
         b.parent_block.nonce = nonce;
         if (!construct_parent_block(b, parent_block))
@@ -172,24 +176,6 @@ NAN_METHOD(construct_block_blob) {
 
         if (!mergeBlocks(parent_block, b, std::vector<crypto::hash>()))
             return THROW_ERROR_EXCEPTION("Failed to postprocess mining block");
-    }
-    if (b.major_version == BLOCK_MAJOR_VERSION_3) {
-        block parent_block;
-        b.parent_block.nonce = nonce;
-        if (!construct_parent_block(b, parent_block))
-            return THROW_ERROR_EXCEPTION("Failed to construct parent block");
-
-        if (!mergeBlocks(parent_block, b, std::vector<crypto::hash>()))
-            return THROW_ERROR_EXCEPTION("Failed to postprocess mining block");
-    }
-    if (b.major_version == BLOCK_MAJOR_VERSION_4) {
-      block parent_block;
-      b.parent_block.nonce = nonce;
-      if (!construct_parent_block(b, parent_block))
-        return THROW_ERROR_EXCEPTION("Failed to construct parent block");
-
-      if (!mergeBlocks(parent_block, b, std::vector<crypto::hash>()))
-        return THROW_ERROR_EXCEPTION("Failed to postprocess mining block");
     }
 
     if (!block_to_blob(b, output))

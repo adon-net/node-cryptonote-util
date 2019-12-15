@@ -18,7 +18,9 @@
 #pragma once
 
 #if !defined(__cplusplus)
-#include <stddef.h>
-#endif
 
-void generate_random_bytes(size_t n, void *result);
+typedef int bool;
+#define true 1
+#define false 0
+
+#endif
